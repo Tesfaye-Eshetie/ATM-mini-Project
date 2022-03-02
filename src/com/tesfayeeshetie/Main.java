@@ -5,37 +5,66 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-	 Account someOne = new Account(250);
-     Scanner input = new Scanner(System.in);
+        Account userAccount = new Account(250);
+        Scanner input = new Scanner(System.in);
 
-     String option;
-        System.out.println("What do you like to do?");
-        option= input.nextLine();
+        //declare and initialize withdraw, and deposit
+        int withdraw, deposit;
 
-        if (option.equalsIgnoreCase("showMyAccount")){
-            someOne.show();
-        }
-        else if (option.equalsIgnoreCase("withDraw")){
-            int amount;
-            System.out.println("Inter the amount?");
-            amount=input.nextInt();
-            int bills;
-            System.out.println("Choose a type of bills?");
-            bills = input.nextInt();
-            System.out.printf("You going to have %s of %s %n", amount/bills, bills);
-            someOne.withdraw(amount);
-            someOne.show();
-        }
-        else if (option.equalsIgnoreCase("deposit")) {
-            int amount;
-            System.out.println("Insert amount?");
-            amount = input.nextInt();
-            someOne.deposit(amount);
-            someOne.show();
-        }
-        else {
-            System.out.println("Wrong input please re-inter your need?");
-        }
+        while (true) {
+            System.out.println("Automated Teller Machine");
+            System.out.println("Choose 1 for Withdraw");
+            System.out.println("Choose 2 for Deposit");
+            System.out.println("Choose 3 for Check Balance");
+            System.out.println("Choose 4 for EXIT");
+            System.out.print("Choose the operation you want to perform:");
 
+            //get choice from user
+            int choice = input.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter money to be withdrawn:");
+
+                    //get the withdrawn money from user
+                    withdraw = input.nextInt();
+
+                    //check whether the balance is greater than or equal to the withdrawal amount
+                    if (userAccount.getAmountOfMoney() >= withdraw) {
+                        //remove the withdrawn amount from the total balance
+                        userAccount.withdraw(withdraw);
+                        System.out.println("Please collect your money");
+                    } else {
+                        //show custom error message
+                        System.out.println("Insufficient Balance");
+                    }
+                    System.out.println("");
+                    break;
+
+                case 2:
+
+                    System.out.print("Enter money to be deposited:");
+
+                    //get deposit amount from te user
+                    deposit = input.nextInt();
+
+                    //add the deposit amount to the total balance
+                    userAccount.deposit(deposit);
+                    System.out.println("Your Money has been successfully deposited");
+                    System.out.println("");
+                    break;
+
+                case 3:
+                    //displaying the total balance of the user
+                    userAccount.showBalance();
+                    System.out.println("");
+                    break;
+
+                case 4:
+                    //exit from the menu
+                    System.exit(0);
+            }
+        }
     }
 }
+
+
